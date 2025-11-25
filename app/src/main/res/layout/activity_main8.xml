@@ -1,0 +1,1252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white"
+    tools:context=".MainActivity8"
+    android:windowSoftInputMode="adjustPan|stateHidden">
+
+    <!-- Contenedor principal vertical -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="false"
+            android:paddingTop="-24dp"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#000000"
+                android:titleTextColor="@android:color/white"
+                android:fitsSystemWindows="false"
+                app:title="Reportes"
+                app:navigationIcon="@drawable/ic_menu" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <!-- 🔽 Aquí sigue tu contenido actual -->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="0dp">
+
+            <FrameLayout
+                android:id="@+id/contenedorMain4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+        <!-- Barra de dirección -->
+        <LinearLayout
+            android:id="@+id/directionBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/tvDireccionTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección seleccionada:"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(Aún no seleccionada)"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:paddingTop="4dp"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/autocompleteFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_edittext"
+            android:padding="4dp"
+            android:visibility="gone">   <!-- oculto -->
+
+            <fragment
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+        </FrameLayout>
+
+
+        <!-- Autocomplete
+        <FrameLayout
+            android:id="@+id/autocompleteFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_edittext"
+            android:padding="4dp">
+
+            <fragment
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+        </FrameLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="16dp"/>
+        Fragmento de Google Maps -->
+
+        <FrameLayout
+            android:id="@+id/layoutMap"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Fragmento de mapa -->
+
+            <!-- Contenedor vertical para barras -->
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <LinearLayout
+                android:id="@+id/searchContainer"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+                <!-- Barra de búsqueda de colonias / fraccionamientos -->
+                <AutoCompleteTextView
+                    android:id="@+id/etSearchColonia"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="Buscar colonia"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="12dp"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:drawableEnd="@drawable/ic_close"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:visibility="visible"
+                    android:elevation="10dp"/>
+
+                <!-- Contenedor horizontal para calle + número -->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:weightSum="3">
+
+                    <!-- Barra de búsqueda de calles -->
+                    <AutoCompleteTextView
+                        android:id="@+id/etSearchCalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_weight="2"
+                        android:hint="Buscar calle"
+                        android:background="@drawable/rounded_edittext"
+                        android:padding="12dp"
+                        android:drawableLeft="@android:drawable/ic_menu_search"
+                        android:drawableEnd="@drawable/ic_close"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:visibility="visible"
+                        android:elevation="10dp"/>
+
+                    <!-- Barra para número de calle -->
+                    <EditText
+                        android:id="@+id/etNumeroCalle"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:hint="#No."
+                        android:background="@drawable/rounded_edittext"
+                        android:padding="12dp"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:visibility="gone"
+                        android:elevation="10dp"
+                        android:layout_marginStart="8dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+
+
+        <!-- 🔹 Pantalla 2 compacta y optimizada -->
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/layoutPantalla2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+
+            android:background="#FFFFFF">
+
+
+
+
+            <ScrollView
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:fadeScrollbars="true"
+                android:scrollbarThumbVertical="@android:color/transparent"
+                android:scrollbarTrackVertical="@android:color/transparent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+                    <!-- Contenedor horizontal tarjeta + botón -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="22dp">
+
+                        <!-- 🔹 TARJETA DE DIRECCIÓN -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnMostrarMapa"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="10dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@android:color/darker_gray"
+                            app:cardBackgroundColor="@android:color/white"
+                            android:padding="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <!-- Franja lateral -->
+                                <LinearLayout
+                                    android:id="@+id/franjaIcono"
+                                    android:layout_width="70dp"
+                                    android:layout_height="match_parent"
+                                    android:minHeight="52dp"
+                                    android:gravity="center"
+                                    android:paddingTop="18dp"
+                                    android:paddingBottom="18dp"
+                                    android:background="@drawable/degradado_franja_icono">
+
+                                    <ImageView
+                                        android:id="@+id/iconUbicacion"
+                                        android:layout_width="48dp"
+                                        android:layout_height="match_parent"
+                                        android:minHeight="52dp"
+                                        android:adjustViewBounds="true"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/ic_location"
+                                        android:contentDescription="Ubicación"
+                                        android:tint="@android:color/black" />
+                                </LinearLayout>
+
+                                <!-- Contenido de la tarjeta -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:minHeight="52dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvEtiquetaDireccion"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="6dp"
+                                        android:text="Dirección seleccionada"
+                                        android:textColor="@android:color/black"
+                                        android:textSize="17sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tvDireccion2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="10dp"
+                                        android:text="Selecciona una ubicación"
+                                        android:textSize="15sp"
+                                        android:textColor="@android:color/black" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                        <!-- 🔹 BOTÓN A LA DERECHA DE LA TARJETA -->
+                        <ImageButton
+                            android:id="@+id/btnIrCasa"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/rounded_button"
+                            android:src="@drawable/ic_casa"
+                            android:visibility="gone"
+                            android:tint="@android:color/white"
+                            android:padding="12dp"
+                            android:contentDescription="Mi ubicación" />
+
+                    </LinearLayout>
+
+                    <!-- 🔹 Teléfono con botones circulares -->
+                    <!-- 🔹 LADA + Teléfono con botón, centrados y más grandes -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginBottom="12dp">
+
+                        <!-- Campo LADA -->
+                        <EditText
+                            android:id="@+id/etLada"
+                            android:layout_width="55dp"
+                            android:layout_height="58dp"
+                            android:hint="LADA"
+                            android:text="449"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:background="@drawable/estilo_edittext"
+                            android:textSize="21sp"
+
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="8dp" />
+
+                        <!-- Separación -->
+                        <Space
+                            android:layout_width="8dp"
+                            android:layout_height="1dp" />
+
+                        <!-- Campo Teléfono -->
+                        <EditText
+                            android:id="@+id/etTelefono2"
+                            android:layout_width="120dp"
+                            android:layout_height="58dp"
+                            android:hint="Teléfono"
+                            android:inputType="phone"
+                            android:maxLength="10"
+                            android:background="@drawable/estilo_edittext"
+                            android:textSize="21sp"
+
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="8dp" />
+
+
+                        <!-- Campo de teléfono más pequeño -->
+                        <EditText
+                            android:id="@+id/etTelefono"
+                            android:layout_width="180dp"
+                            android:layout_height="44dp"
+                            android:hint="Teléfono"
+                            android:inputType="phone"
+                            android:maxLength="12"
+                            android:background="@drawable/estilo_edittext"
+                            android:textSize="16sp"
+                            android:visibility="gone"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="4dp" />
+
+
+
+                        <!-- Botón amarillo circular -->
+                        <ImageButton
+                            android:id="@+id/btnAmarillo"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginStart="6dp"
+                            android:backgroundTint="#FFC107"
+                            android:background="@drawable/bg_btn_circular"
+                            android:contentDescription="Botón amarillo"
+                            android:visibility="gone"
+                            android:src="@android:drawable/ic_input_get"
+                            android:tint="#FFFFFF" />
+
+                    </LinearLayout>
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/etNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:hint="Nombre"
+                        android:inputType="textCapCharacters"
+                        android:layout_marginBottom="3dp"
+                        android:background="@drawable/estilo_edittext"
+                        android:textSize="17sp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="1dp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/etApellidoPaterno"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:hint="Apellido Paterno"
+                        android:inputType="textCapCharacters"
+                        android:layout_marginBottom="3dp"
+                        android:background="@drawable/estilo_edittext"
+                        android:textSize="17sp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="4dp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/etApellidoMaterno"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:hint="Apellido Materno"
+                        android:inputType="textCapCharacters"
+                        android:layout_marginBottom="3dp"
+                        android:background="@drawable/estilo_edittext"
+                        android:textSize="17sp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="4dp" />
+
+                    <EditText
+                        android:id="@+id/etDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:hint="Descripción del problema"
+                        android:inputType="textMultiLine"
+                        android:gravity="top"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/estilo_edittext"
+                        android:textSize="17sp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="6dp" />
+
+
+        <!-- Multimedia selector -->
+                    <LinearLayout
+                        android:id="@+id/layoutFoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/ivThumbnail"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:tint="#000000" />
+
+                        <TextView
+                            android:id="@+id/tvAddMedia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agregar / tomar foto, video, audio o PDF"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:layout_marginStart="16dp"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- Fotos y videos añadidos -->
+                    <TextView
+                        android:id="@+id/tvGalleryLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Fotos y videos añadidos"
+                        android:textStyle="bold"
+                        android:textColor="#1E88E5"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/horizontalScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/imageContainer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="4dp" />
+                    </HorizontalScrollView>
+
+                    <!-- Audios añadidos -->
+                    <TextView
+                        android:id="@+id/tvAudioLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Audios añadidos"
+                        android:textStyle="bold"
+                        android:textColor="#1E88E5"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/audioContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:visibility="gone" />
+
+                    <!-- PDFs añadidos -->
+                    <TextView
+                        android:id="@+id/tvPdfLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Archivos PDF añadidos"
+                        android:textStyle="bold"
+                        android:textColor="#1E88E5"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/pdfContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </ScrollView>
+            <!-- 🔹 CONTENEDOR BOTONES + BURBUJAS -->
+            <LinearLayout
+                android:id="@+id/layoutBotones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF"
+                android:elevation="6dp">
+
+                <!-- 🔹 CONTENEDOR GENERAL DE BURBUJAS -->
+                <LinearLayout
+                    android:id="@+id/layoutBurbujas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone">
+
+                    <!-- 🔸 BURBUJA CATEGORÍA -->
+
+                    <LinearLayout
+                        android:id="@+id/burbujaCategoria"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:background="@drawable/bg_tab"
+                        android:elevation="4dp"
+                        android:visibility="gone"
+                        android:gravity="center_vertical">
+
+                        <View
+                            android:id="@+id/viewColorCategoria2"
+                            android:layout_width="8dp"
+                            android:layout_height="32dp"
+                            android:visibility="gone"
+                            android:layout_marginEnd="8dp"
+                            android:background="#CCCCCC" />
+
+                        <ImageView
+                            android:id="@+id/imgIconoCategoria"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:visibility="gone"
+                            android:layout_marginEnd="6dp" />
+
+                        <TextView
+                            android:id="@+id/txtCategoria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Categoría"
+                            android:textStyle="bold"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+
+                    <!-- 🔸 BURBUJA SUBCATEGORÍA -->
+                    <LinearLayout
+                        android:id="@+id/burbujaSubcategoria"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:background="@drawable/bg_tab_secundario"
+                        android:elevation="3dp"
+                        android:visibility="gone"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:id="@+id/imgIconoSubcategoria"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:visibility="gone"
+                            android:layout_marginEnd="6dp" />
+
+                        <TextView
+                            android:id="@+id/txtSubcategoria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Subcategoría"
+                            android:visibility="gone"
+                            android:textStyle="bold"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 🔹 PESTAÑA SOBRE EL BOTÓN (SIN ESPACIO) -->
+                <LinearLayout
+                    android:id="@+id/pestaniaSeleccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_pestania"
+                    android:visibility="gone"
+                    android:translationY="10dp">
+
+                    <TextView
+                        android:id="@+id/txtPestania"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selecciona una categoría"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
+                <!-- 🔹 BOTÓN ABAJO -->
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Generar Guía"
+                    android:backgroundTint="#000000"
+                    android:textColor="#FFFFFF"
+                    android:padding="16dp"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+
+            <!-- 🔴 MODAL flotante de grabación -->
+            <FrameLayout
+                android:id="@+id/layoutGrabandoAudio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88000000"
+
+                android:visibility="gone"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_modal"
+                    android:padding="24dp"
+                    android:elevation="8dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/tvRecordingTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnStartRecording"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Grabar"
+                            android:backgroundTint="#4CAF50"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginEnd="16dp" />
+
+                        <Button
+                            android:id="@+id/btnCancelarGrabacion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancelar"
+                            android:backgroundTint="#F44336"
+                            android:textColor="#FFFFFF" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+    <FrameLayout
+        android:id="@+id/rootModalTablaBitacora"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_modal_contenido"
+            android:elevation="2dp"
+            android:clipToOutline="true"
+            android:maxHeight="650dp">
+
+            <!-- 🔸 Encabezado del modal -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvTituloTabla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bitácora de Reportes"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp" />
+
+                <ImageView
+                    android:id="@+id/btnCerrarModalTabla"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:tint="@android:color/darker_gray"
+                    android:contentDescription="Cerrar"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CCC" />
+
+            <!-- 🔹 Total de registros -->
+            <TextView
+                android:id="@+id/tvTotalRegistros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total: 0 registros"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp" />
+
+            <!-- 🔹 Área de tabla con scroll -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:elevation="4dp">
+
+                <!-- Cabecera fija -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EEEEEE"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Reporte"
+                        android:textStyle="bold"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Fecha"
+                        android:textStyle="bold"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Colonia"
+                        android:textStyle="bold"
+                        android:textColor="#000" />
+
+                    <ImageView
+                        android:id="@+id/btnBuscar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/outline_search_24"
+                        android:contentDescription="Buscar"
+                        android:tint="@android:color/black"
+                        android:visibility="gone"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <ImageView
+                        android:id="@+id/btnMostrarTablaCompleta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_fullscreen"
+                        android:contentDescription="Expandir"
+                        android:tint="@android:color/black"
+                        android:visibility="gone"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- 🔹 ScrollView -->
+                <ScrollView
+                    android:id="@+id/scrollTablaBitacora"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fillViewport="true"
+                    android:scrollbarThumbVertical="@android:color/transparent"
+                    android:scrollbarTrackVertical="@android:color/transparent">
+
+
+                <LinearLayout
+                        android:id="@+id/layoutTabla"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="4dp" />
+                </ScrollView>
+            </LinearLayout>
+
+            <!-- 🔸 Botón para cerrar -->
+            <Button
+                android:id="@+id/btnCerrarModalBitacora"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:text="Cerrar"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                android:background="@drawable/bg_boton_enviar"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+
+
+    <!-- 🔹 MODAL flotante de vista previa -->
+    <FrameLayout
+        android:id="@+id/rootModalContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/bg_modal_contenido"
+            android:elevation="12dp"
+            android:clipToOutline="true">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- 🔹 Encabezado -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/tvTitulo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Datos del Reporte"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="4dp" />
+
+                        <ImageView
+                            android:id="@+id/btnCerrarX"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:tint="@android:color/darker_gray"
+                            android:contentDescription="Cerrar"
+                            android:background="?attr/selectableItemBackgroundBorderless" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#CCC" />
+
+                    <!-- 🔹 Contenido del modal -->
+                    <LinearLayout
+                        android:id="@+id/layoutCategoriaColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <View
+                            android:id="@+id/viewColorCategoria"
+                            android:layout_width="10dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="#CCCCCC" />
+
+                        <ImageView
+                            android:id="@+id/iconCategoriaVista"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginEnd="8dp"
+                            android:contentDescription="Ícono categoría" />
+
+                        <TextView
+                            android:id="@+id/tvCategoriaVista"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Categoría:"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvSubcategoriaVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Subcategoría:"
+                        android:paddingBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvDireccionVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dirección:"
+                        android:paddingBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvNombreVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre:"
+                        android:paddingBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvApellidosVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Apellidos:"
+                        android:paddingBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvTelefonoVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Teléfono:"
+                        android:paddingBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvDescripcionVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Descripción:"
+                        android:paddingBottom="6dp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutArchivosVista"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical" />
+
+                    <!-- 🔹 Botón Enviar -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp">
+
+                        <Button
+                            android:id="@+id/btnEnviarVistaPrevia"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:text="Enviar"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:paddingVertical="10dp"
+                            android:background="@drawable/bg_boton_enviar" />
+                    </LinearLayout>
+
+                    <!-- 🔹 Barra de progreso -->
+                    <LinearLayout
+                        android:id="@+id/layoutProgresoUpload"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone">
+
+                        <ProgressBar
+                            android:id="@+id/progressBarUpload"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="@color/purple_500"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvProgresoUpload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cargando..."
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <!-- 🔹 Campo para mostrar número de guía -->
+                    <LinearLayout
+                        android:id="@+id/layoutGuia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvTituloGuia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GUÍA"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvNumeroGuia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="000000"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:textColor="#0077CC"
+                            android:gravity="center"
+                            android:layout_marginBottom="24dp" />
+
+                        <!-- 🔸 Contenedor horizontal para los botones -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/btnCerrarGuia"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:text="Otro Reporte"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold"
+                                android:paddingVertical="10dp"
+                                android:background="@drawable/bg_boton_enviar"
+                                android:layout_marginEnd="12dp" />
+
+                            <Button
+                                android:id="@+id/btnNuevaReporte"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:text="Nueva Reporte"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold"
+                                android:paddingVertical="10dp"
+                                android:background="@drawable/bg_boton_enviar" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <!-- 🔥 ESTE DEBE QUEDAR AL FINAL PARA QUE SE VEA ENCIMA DE TODO -->
+    <FrameLayout
+        android:id="@+id/rootModalLoader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/loaderGif"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/loader_loading" />
+    </FrameLayout>
+
+    <!-- Botón enviar -->
+    <Button
+        android:id="@+id/btnEnviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
+        android:padding="14dp"
+        android:text="Capturar Datos"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:backgroundTint="#000000"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_button"/>
+
+
+    <!-- Botón ubicación flotante -->
+    <ImageButton
+        android:id="@+id/btnUbicacion"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/btnEnviar"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/ic_location"
+        android:tint="@android:color/white"
+        android:contentDescription="Mi ubicación"/>
+</RelativeLayout>
